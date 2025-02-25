@@ -14,7 +14,7 @@ def top_ten(subreddit):
         subreddit (str): The name of the subreddit to query.
 
     Returns:
-        None: Prints the titles or None if the subreddit is invalid.
+        None
     """
     # Reddit API URL for hot posts in a subreddit
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
@@ -28,7 +28,7 @@ def top_ten(subreddit):
     try:
         response = requests.get(url, headers=headers, allow_redirects=False)
         
-        # Check if the request was successful (status code 200)
+        # Check if the request was successful and status code is 200
         if response.status_code == 200:
             # Parse the JSON response
             data = response.json()
@@ -40,11 +40,9 @@ def top_ten(subreddit):
                 if i >= 10:
                     break
                 print(post.get('data', {}).get('title'))
-            return True
         else:
             # If not a valid subreddit, print None
             print(None)
-            return False
     except Exception:
+        # Handle any exceptions
         print(None)
-        return False
