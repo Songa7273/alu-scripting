@@ -21,7 +21,7 @@ def top_ten(subreddit):
 
     # Set a custom User-Agent to avoid too many requests error
     headers = {
-        'User-Agent': 'linux:alu-script:v1.0.0 (by /u/Songa7273)'
+        'User-Agent': 'linux:alu-reddit-api:v1.0.0 (by /u/Songa7273)'
     }
 
     # Make the request to the Reddit API
@@ -35,10 +35,12 @@ def top_ten(subreddit):
         # Extract and print the titles of the first 10 hot posts
         posts = data.get('data', {}).get('children', [])
 
-        for i, post in enumerate(posts):
-            if i >= 10:
+        count = 0
+        for post in posts:
+            if count >= 10:
                 break
             print(post.get('data', {}).get('title'))
+            count += 1
     else:
-        # If not a valid subreddit, print None
+        # If not a valid subreddit, print None without quotes
         print(None)
