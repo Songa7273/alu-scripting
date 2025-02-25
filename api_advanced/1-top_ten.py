@@ -18,29 +18,26 @@ def top_ten(subreddit):
     """
     # Reddit API URL for hot posts in a subreddit
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    
+
     # Set a custom User-Agent to avoid too many requests error
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        'User-Agent': 'linux:alu-script:v1.0.0 (by /u/Songa7273)'
     }
-    
-    # Set parameters to limit to 10 posts and prevent following redirects
-    params = {
-        'limit': 10
-    }
-    
+
     # Make the request to the Reddit API
-    response = requests.get(url, headers=headers, params=params, allow_redirects=False)
-    
+    response = requests.get(url, headers=headers, allow_redirects=False)
+
     # Check if the request was successful (status code 200)
     if response.status_code == 200:
         # Parse the JSON response
         data = response.json()
-        
+
         # Extract and print the titles of the first 10 hot posts
         posts = data.get('data', {}).get('children', [])
-        
-        for post in posts:
+
+        for i, post in enumerate(posts):
+            if i >= 10:
+                break
             print(post.get('data', {}).get('title'))
     else:
         # If not a valid subreddit, print None
